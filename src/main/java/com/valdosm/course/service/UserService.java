@@ -16,9 +16,14 @@ public class UserService {
         return  userRepository.findAll();
 
     }
+    //por id
     public User findById(Integer id){
         Optional <User>obj =  userRepository.findById(id);
         return obj.get();
+    }
+    //inserir user
+    public User insert(User user){
+        return userRepository.save(user);
     }
     
 }

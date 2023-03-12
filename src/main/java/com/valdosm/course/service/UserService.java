@@ -2,11 +2,13 @@ package com.valdosm.course.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
 import com.valdosm.course.entities.User;
 import com.valdosm.course.repository.UserRepository;
+import com.valdosm.course.service.exceptions.ResourceNotFoundException;
 
  @Service
 public class UserService {
@@ -19,7 +21,7 @@ public class UserService {
     //por id
     public User findById(Integer id){
         Optional <User>obj =  userRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(()-> new ResourceNotFoundException(id));
     }
     //inserir user
     public User insert(User user){

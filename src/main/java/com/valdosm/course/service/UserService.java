@@ -40,6 +40,11 @@ public class UserService {
             entity.setPhone(obj.getPhone());
             entity.setPassword(obj.getPassword());
         }
+            //deletar usuario
+    public void delete(Integer id){
+        userRepository.deleteById(id);
+       }
+
     
 
     }

@@ -1,6 +1,8 @@
 package com.valdosm.course.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Optional;
 
 import com.valdosm.course.entities.User;
 import com.valdosm.course.repository.UserRepository;
+import com.valdosm.course.service.exceptions.DataBaseException;
 import com.valdosm.course.service.exceptions.ResourceNotFoundException;
 
  @Service
@@ -42,9 +45,12 @@ public class UserService {
         }
             //deletar usuario
     public void delete(Integer id){
-        userRepository.deleteById(id);
+        try{
+         userRepository.deleteById(id);
+        }catch(EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException(id);
+        }catch(DataIntegrityViolationException e){
+            throw new DataBaseException(e.getMessage());
+        }
        }
-
-    
-
     }
